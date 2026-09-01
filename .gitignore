@@ -11,3 +11,6 @@ node_modules/
 # Sistema
 .DS_Store
 Thumbs.db
+
+# Andamiaje de comparacion de soluciones, no forma parte del entregable
+_preview/

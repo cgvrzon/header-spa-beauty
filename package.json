@@ -7,7 +7,8 @@
   "private": true,
   "scripts": {
     "dev": "sass --watch src/scss/main.scss dist/css/main.css --style=expanded",
-    "build": "sass src/scss/main.scss dist/css/main.css --style=compressed --no-source-map"
+    "build": "sass src/scss/main.scss dist/css/main.css --style=compressed --no-source-map",
+    "serve": "python3 -m http.server 8080 --bind 0.0.0.0"
   },
   "devDependencies": {
     "sass": "^1.103.1"
