@@ -47,6 +47,25 @@
   align-items: center;
   gap: $space-6;
 
+  // Each figure lifts on hover. They are not links, so this is not an
+  // affordance - it is feedback that the pointer is over one item and not the
+  // block, which makes a row of three read as three things.
+  @media (prefers-reduced-motion: no-preference) {
+    transition: transform $transition-fast;
+
+    &:hover {
+      transform: translateY(-6px);
+    }
+
+    .stats__icon {
+      transition: transform $transition-fast;
+    }
+
+    &:hover .stats__icon {
+      transform: scale(1.1);
+    }
+  }
+
   // NO box-shadow here, even though Figma reports one on these frames.
   //
   // Figma and CSS disagree about what a shadow is cast BY. Figma drops it

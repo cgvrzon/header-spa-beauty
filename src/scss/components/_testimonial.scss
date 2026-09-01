@@ -35,6 +35,19 @@
   background-color: $color-glass-quote;
   backdrop-filter: blur($blur-glass);
   border-radius: $radius-md;
+
+  // The card firms up under the pointer: more opaque, so the quote separates
+  // from the photograph behind it, plus a shadow to pull it forward. Raising
+  // the opacity also RAISES the text contrast, which is the rare hover that
+  // makes something easier to read rather than merely different.
+  transition:
+    background-color $transition-fast,
+    box-shadow $transition-fast;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 14px 34px rgba(38, 64, 101, 0.14);
+  }
 }
 
 .testimonial--top {

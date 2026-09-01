@@ -32,15 +32,16 @@
   color: $color-accent;
 }
 
-// The wordmark is a link to the homepage, so the brief's hover requirement
-// covers it. Swapping the two halves' colours keeps the mark recognisable
-// while making the state unmistakable.
-.logo:hover {
-  .logo__strong {
-    color: $color-accent;
-  }
+// The wordmark is a link home, so the brief's hover requirement covers it.
+// Swapping the two halves was the first idea and it was wrong: it put the
+// mint on "Glow" over the cream, at a contrast of 1.50. Instead the mint half
+// darkens to the brand colour, so the whole mark reads as one solid word -
+// visible, and it never sends any part of the logo below its resting
+// contrast.
+.logo__accent {
+  transition: color $transition-fast;
+}
 
-  .logo__accent {
-    color: $color-brand;
-  }
+.logo:hover .logo__accent {
+  color: $color-brand;
 }

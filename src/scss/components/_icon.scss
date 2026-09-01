@@ -35,7 +35,17 @@
   height: $icon-sm;
 }
 
+// HOVER AS A DISC BEHIND THE ICON:
+//     These two sit on the mint panel, and recolouring them to the mint
+//     accent measured a contrast of 1.00 - the icon became literally the same
+//     colour as what was behind it. A disc lights up behind instead, so the
+//     stroke keeps its 6.57 and the target reads as pressable.
+//
+//     The disc is a pseudo-element with negative inset rather than padding on
+//     the button: padding would widen the control and shift everything in the
+//     header, and those positions are measured against the design.
 .icon-button {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -44,10 +54,24 @@
   background: none;
   color: $color-brand;
   cursor: pointer;
-  transition: color $transition-fast;
 
-  &:hover {
-    color: $color-accent;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    background-color: transparent;
+    transition: background-color $transition-fast;
+  }
+
+  &:hover::before {
+    background-color: rgba(255, 255, 255, 0.65);
+  }
+
+  // A positioned element paints above a static one, so the icon needs its own
+  // stacking position or the disc would cover it.
+  .icon {
+    position: relative;
   }
 }
 

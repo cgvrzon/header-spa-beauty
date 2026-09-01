@@ -47,8 +47,26 @@
   background-color: $color-brand;
   color: $color-surface-alt;
 
+  // A darker fill alone is a weak signal on a colour this dark - the eye
+  // barely registers 12% off navy. Lifting the pill and casting a shadow
+  // tinted with the brand colour reads instantly, because depth is a much
+  // stronger cue than a shade.
   &:hover {
-    background-color: color.scale($color-brand, $lightness: -12%);
+    background-color: color.scale($color-brand, $lightness: -14%);
+    box-shadow: 0 10px 22px rgba(38, 64, 101, 0.32);
+  }
+
+  // The movement is opt-in: a reader who asked for less motion still gets the
+  // colour and the shadow, just without the travel.
+  @media (prefers-reduced-motion: no-preference) {
+    transition:
+      background-color $transition-fast,
+      box-shadow $transition-fast,
+      transform $transition-fast;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
   }
 }
 
@@ -75,8 +93,12 @@
   // 32px opens that seam without grouping the markup any further.
   margin-inline-start: $space-8;
 
+  // Recolouring to the accent measured 1.00 against the mint panel this link
+  // sits on: invisible. A thicker underline says the same thing and keeps the
+  // text where it was.
   &:hover {
-    color: $color-accent;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 3px;
   }
 }
 
@@ -108,6 +130,17 @@
   &:hover {
     background-color: $color-glass-card;
   }
+
+  // The disc is the affordance here, so it is the disc that reacts.
+  &:hover .video-button__disc {
+    box-shadow: 0 12px 28px rgba(38, 64, 101, 0.28);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    &:hover .video-button__disc {
+      transform: scale(1.08);
+    }
+  }
 }
 
 .video-button__disc {
@@ -123,6 +156,10 @@
 
   // The triangle inherits this, so the disc owns the icon's colour.
   color: $color-brand;
+
+  transition:
+    box-shadow $transition-fast,
+    transform $transition-fast;
 
   // The glyph inside this SVG occupies 7 of its 24 viewBox units, so at 24px
   // it drew a 7px triangle where Figma has 15px. Sizing the SVG to the disc
