@@ -1,0 +1,53 @@
+// ===========================================================================
+// FILE: src/scss/layout/_canvas.scss
+// PROJECT: GlowQueen - Header & hero
+// AUTHOR: @cgvrzon
+// ===========================================================================
+//
+// DESCRIPTION:
+//     Fits the fixed 1920x1080 canvas inside whatever window it is opened in.
+//
+// THE PROBLEM:
+//     The design is a fixed composition at 1920x1080. Plenty of screens are
+//     smaller than that - and even a 1920x1080 monitor is not, in practice,
+//     because the browser's own chrome eats about 130px of height. The page
+//     then opens scrolled on both axes and cannot be seen at a glance.
+//
+// WHY THIS IS NOT "MAKING IT RESPONSIVE":
+//     Responsive means the layout REFLOWS: things move, wrap, stack. Nothing
+//     moves here. The whole canvas is scaled as one, like the browser's own
+//     zoom, so every proportion and every measured distance is preserved. The
+//     brief rules out reflow, not fitting the artwork on screen.
+//
+// WHY `zoom` AND NOT `transform: scale()`:
+//     `transform` paints smaller but does not change layout: the element still
+//     occupies 1920x1080 in the flow, so the scrollbars would stay. `zoom`
+//     takes part in layout, so the page genuinely ends up smaller and the
+//     scrolling disappears - which was the whole point.
+//
+// THE `1` IN THE min():
+//     Without it, a 2560x1440 monitor would compute 1.33 and ENLARGE the
+//     design, which would break fidelity on exactly the screens that had no
+//     problem to begin with. The cap means: shrink to fit when it does not
+//     fit, and never grow past life size.
+//
+// GRACEFUL DEGRADATION:
+//     A browser that does not support `zoom` ignores the declaration and
+//     shows the page at 1:1 - the behaviour before this file existed. Nothing
+//     breaks; it just stops being convenient.
+// ===========================================================================
+
+@use "../abstracts/variables" as *;
+
+// WHY ON <body>:
+//     Both <html> and <body> work - measured, not assumed. <body> is the one
+//     that carries the width, the margins and the backdrop, so it IS the
+//     canvas; <html> is the window it is seen through. Scaling the artwork
+//     rather than the window is the honest reading of what is happening.
+body {
+  zoom: min(
+    1,
+    calc(100vw / #{$canvas-width}),
+    calc(100vh / #{$canvas-height})
+  );
+}
