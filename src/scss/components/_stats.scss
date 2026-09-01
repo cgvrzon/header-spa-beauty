@@ -1,0 +1,103 @@
+// ===========================================================================
+// FILE: src/scss/components/_stats.scss
+// PROJECT: GlowQueen - Header & hero
+// AUTHOR: @cgvrzon
+// ===========================================================================
+//
+// DESCRIPTION:
+//     The three business figures, in a translucent card that straddles the
+//     backdrop's colour change: its top half is over the cream band, its
+//     bottom half over the white below y=820.
+//
+// WHY THE CARD IS TRANSLUCENT AND NOT A FLAT COLOUR:
+//     That straddling is the whole reason. A flat white card would cut a hard
+//     rectangle across the band; this one lets both halves through at 80% and
+//     blurs what is behind, so the seam keeps reading through the card. It is
+//     the same reason a token named `$color-accent-soft` was wrong earlier:
+//     what looked like a colour was a surface letting another colour through.
+//
+// THE ICONS:
+//     Set as background images rather than inline SVG. They are purely
+//     decorative - the HTML already marks the span aria-hidden - and this
+//     keeps three 8 KB vectors out of the document.
+// ===========================================================================
+
+@use "../abstracts/variables" as *;
+
+.stats {
+  position: absolute;
+  left: $gutter-inline;
+  top: 678px;
+  z-index: 4;
+
+  display: flex;
+  gap: $space-18;
+  padding: $space-8;
+  margin: 0;
+  list-style: none;
+
+  background-color: $color-glass-card;
+  backdrop-filter: blur($blur-glass);
+  border-radius: $radius-md;
+}
+
+.stats__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-6;
+
+  // NO box-shadow here, even though Figma reports one on these frames.
+  //
+  // Figma and CSS disagree about what a shadow is cast BY. Figma drops it
+  // from the silhouette of the contents when the frame has no fill, which
+  // makes it all but invisible. `box-shadow` always casts from the element's
+  // BOX, so the same values drew three grey rectangles that do not exist in
+  // the design. Reproducing the number would have betrayed the intent.
+}
+
+.stats__icon {
+  width: $icon-stat;
+  height: $icon-stat;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+// Each figure has its own pictogram; the order is the order of the list.
+.stats__item:nth-child(1) .stats__icon {
+  background-image: url("../../assets/icons/icon-stat-1.svg");
+}
+.stats__item:nth-child(2) .stats__icon {
+  background-image: url("../../assets/icons/icon-stat-2.svg");
+}
+.stats__item:nth-child(3) .stats__icon {
+  background-image: url("../../assets/icons/icon-stat-3.svg");
+}
+
+.stats__value {
+  font-size: $font-size-display;
+  font-weight: $font-weight-medium;
+  color: $color-brand;
+}
+
+.stats__label {
+  // Fixed 145px in Figma. The line breaks themselves are explicit in the
+  // markup, so this width sets the column, it does not cause the wrap.
+  width: 145px;
+
+  // The item spaces its children 24px apart, but Figma nests the figure and
+  // its caption in an inner frame that uses 16. This claws back the 8px
+  // difference without adding a wrapper to the HTML for it.
+  margin-top: -$space-2;
+  font-size: $font-size-body;
+  color: $color-text-body;
+  text-align: center;
+}
+
+// The third caption is Medium while the other two are Regular. There is no
+// reason for it in the design - it is the same kind of slip as the two fonts
+// in the header - and it is reproduced because fidelity was the call.
+.stats__item:nth-child(3) .stats__label {
+  font-weight: $font-weight-medium;
+}

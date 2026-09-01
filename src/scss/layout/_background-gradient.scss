@@ -1,0 +1,63 @@
+// ===========================================================================
+// FILE: src/scss/layout/_background-gradient.scss
+// PROJECT: GlowQueen - Header & hero
+// AUTHOR: @cgvrzon
+// ===========================================================================
+//
+// DESCRIPTION:
+//     Option A for the page backdrop. Every colour area of the design is
+//     painted in CSS; the document gains no element for it.
+//
+// WHAT THE BACKDROP ACTUALLY IS (measured in Figma, node 534:46):
+//     Not three stacked layers, as the PDF suggested. One band 820px tall,
+//     split at x=1285 - cream on the left, mint on the right - sitting on a
+//     white page, with a lotus watermark at 5% opacity inside the mint.
+//
+// WHY CSS AND NOT THREE DIVS:
+//     A backdrop carries no meaning, so it does not belong in the HTML. Keep
+//     it here and a change of design never forces a change of markup, which
+//     is the entire reason the two are separate languages. The alternative -
+//     an element per band - is the same mistake as a layout table: structure
+//     edited to move paint.
+//
+// THE HARD STOP:
+//     A linear-gradient interpolates between its colour stops. Give two stops
+//     the SAME position and there is no room left to interpolate, so the edge
+//     comes out crisp. That is what turns `linear-gradient` from a fade into
+//     a colour-band generator, and it is the whole trick of this file.
+//
+// WHY LONGHAND AND NOT THE `background` SHORTHAND:
+//     Multiple backgrounds are parallel lists: the Nth value of every
+//     property describes the Nth layer. Written longhand that is visible at a
+//     glance; folded into the shorthand it is guesswork.
+// ===========================================================================
+
+@use "../abstracts/variables" as *;
+
+body {
+  // The design is a fixed composition, so the canvas has a known height.
+  min-height: $canvas-height;
+
+  // LAYER ORDER: the first layer paints ON TOP. Read the lists below front
+  // to back - watermark first, colour bands behind it.
+  background-image:
+    url("../../assets/img/lotus-watermark.svg"),
+    linear-gradient(
+      to right,
+      $color-surface 0 $band-split,
+      // cream: left edge to the split
+      $color-accent $band-split 100% // mint: starts exactly where cream ends
+    );
+
+  background-repeat: no-repeat, no-repeat;
+  background-position: top, top;
+
+  // Both layers are the full width but only as tall as the band. Everything
+  // below y=820 falls through to background-color, which always paints last
+  // and covers the whole element.
+  background-size:
+    100% $band-height,
+    100% $band-height;
+
+  background-color: $color-surface-alt;
+}

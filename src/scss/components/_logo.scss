@@ -1,0 +1,46 @@
+// ===========================================================================
+// FILE: src/scss/components/_logo.scss
+// PROJECT: GlowQueen - Header & hero
+// AUTHOR: @cgvrzon
+// ===========================================================================
+//
+// DESCRIPTION:
+//     The wordmark. One word, two colours: "Glow" in brand navy and "Queen"
+//     in the mint accent.
+//
+// WHY TWO SPANS AND NOT ONE ELEMENT:
+//     A colour change mid-word has no way of being expressed in CSS without a
+//     hook to hang it on. The two spans carry no meaning of their own, which
+//     is why they sit inside a single <a>: assistive technology reads one
+//     link named "GlowQueen", not two fragments.
+// ===========================================================================
+
+@use "../abstracts/variables" as *;
+
+.logo {
+  font-size: $font-size-display;
+  font-weight: $font-weight-semibold;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.logo__strong {
+  color: $color-brand;
+}
+
+.logo__accent {
+  color: $color-accent;
+}
+
+// The wordmark is a link to the homepage, so the brief's hover requirement
+// covers it. Swapping the two halves' colours keeps the mark recognisable
+// while making the state unmistakable.
+.logo:hover {
+  .logo__strong {
+    color: $color-accent;
+  }
+
+  .logo__accent {
+    color: $color-brand;
+  }
+}

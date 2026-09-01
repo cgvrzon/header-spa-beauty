@@ -1,0 +1,73 @@
+// ===========================================================================
+// FILE: src/scss/components/_testimonial.scss
+// PROJECT: GlowQueen - Header & hero
+// AUTHOR: @cgvrzon
+// ===========================================================================
+//
+// DESCRIPTION:
+//     The two customer quotes, floating over the photograph on the right.
+//
+// BOTH ARE GLASS, NOT JUST THE LOWER ONE:
+//     Reading the PDF suggested only the second one was frosted, because the
+//     upper card sits on flat mint where a blur has nothing to blur. Figma
+//     gives them identical fills - white at 50% over an 8px backdrop blur.
+//     The effect is the same; what changes is the busyness behind it. A good
+//     reminder that an effect can be invisible without being absent.
+//
+// THE QUOTE MARK:
+//     A background image on the blockquote rather than inline SVG: it is
+//     ornament, and the quotation is already marked up as one.
+// ===========================================================================
+
+@use "../abstracts/variables" as *;
+
+.testimonial {
+  position: absolute;
+  z-index: 3;
+
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  width: 405px; // 357px of text plus 24px of padding either side
+  padding: $space-6;
+  margin: 0;
+
+  background-color: $color-glass-quote;
+  backdrop-filter: blur($blur-glass);
+  border-radius: $radius-md;
+}
+
+.testimonial--top {
+  left: 1449px;
+  top: 435px;
+}
+
+.testimonial--bottom {
+  left: 1309px;
+  top: 747px;
+}
+
+.testimonial__quote {
+  margin: 0;
+  font-size: $font-size-body;
+  color: $color-text-strong;
+
+  // The opening quotation mark, 32x21, sitting above the text.
+  &::before {
+    content: "";
+    display: block;
+    width: $icon-md;
+    height: 21px;
+    margin-bottom: $space-2;
+    background: url("../../assets/icons/icon-quote.svg") no-repeat center / contain;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.testimonial__author {
+  font-weight: $font-weight-bold;
+  color: $color-brand;
+}

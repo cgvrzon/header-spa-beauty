@@ -1,0 +1,135 @@
+// ===========================================================================
+// FILE: src/scss/components/_button.scss
+// PROJECT: GlowQueen - Header & hero
+// AUTHOR: @cgvrzon
+// ===========================================================================
+//
+// DESCRIPTION:
+//     The pill buttons and the underlined text link of the header.
+//
+// WHY inline-flex AND NOT line-height CENTRING:
+//     Centring a label with `line-height: 60px` works until the label wraps
+//     to two lines, and then it silently falls apart. inline-flex centres on
+//     both axes regardless of how much text there is.
+//
+// HOVER:
+//     Required by the brief on everything interactive. The colour shift comes
+//     from `color.scale` rather than a second hardcoded hex, so it stays tied
+//     to the token: change the brand colour and the hover follows.
+//     Transitions are cancelled globally under prefers-reduced-motion in the
+//     reset, so there is nothing to repeat here.
+// ===========================================================================
+
+@use "sass:color";
+@use "../abstracts/variables" as *;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  padding-inline: $space-8;
+  border: 0;
+  border-radius: $radius-pill;
+  font-family: $font-family-base;
+  font-size: $font-size-body;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color $transition-fast,
+    color $transition-fast;
+}
+
+.button--primary {
+  // Figma gives this button a fixed 149px. min-width rather than width so a
+  // longer label grows the pill instead of spilling out of it.
+  min-width: 149px;
+  background-color: $color-brand;
+  color: $color-surface-alt;
+
+  &:hover {
+    background-color: color.scale($color-brand, $lightness: -12%);
+  }
+}
+
+// The hero's primary call to action is the same pill, wider.
+.button--lg {
+  min-width: 180px;
+}
+
+.link-underlined {
+  // Nunito Sans here too, matching the design's inconsistency.
+  font-family: $font-family-alt;
+  font-size: $font-size-body;
+  color: $color-brand;
+  text-decoration: underline;
+  transition: color $transition-fast;
+
+  // Figma wraps this label in a frame with 8px of padding. Without it the
+  // whole actions group came out 19px narrow and everything to its left
+  // drifted right - the control is wider than its text.
+  padding-inline: $space-2;
+
+  // The icons and these two controls are siblings in one flex row with a 32px
+  // gap, but the design leaves 64px between the bag and "Sign In". This extra
+  // 32px opens that seam without grouping the markup any further.
+  margin-inline-start: $space-8;
+
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// WATCH VIDEO
+// ---------------------------------------------------------------------------
+// A button and not a link: it opens a video overlay, it does not navigate.
+//
+// The 240px width is fixed in Figma and is wider than its contents need, so
+// there is slack after the label. That is the design, not a rounding error -
+// centring the content would close the gap and stop matching.
+
+.video-button {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-4;
+  width: 240px;
+  height: 60px;
+  padding: $space-4;
+  border: 0;
+  border-radius: $radius-md;
+  background: none;
+  font-family: $font-family-base;
+  font-size: $font-size-body;
+  color: $color-brand;
+  cursor: pointer;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background-color: $color-glass-card;
+  }
+}
+
+.video-button__disc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: $icon-lg;
+  height: $icon-lg;
+  border-radius: 50%;
+  background-color: $color-surface-alt;
+  box-shadow: $shadow-disc;
+
+  // The triangle inherits this, so the disc owns the icon's colour.
+  color: $color-brand;
+
+  // The glyph inside this SVG occupies 7 of its 24 viewBox units, so at 24px
+  // it drew a 7px triangle where Figma has 15px. Sizing the SVG to the disc
+  // itself lands it at 14px: the artwork is centred in its own box, so it
+  // does not overflow the circle.
+  .icon {
+    width: $icon-lg;
+    height: $icon-lg;
+  }
+}

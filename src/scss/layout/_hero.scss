@@ -1,0 +1,110 @@
+// ===========================================================================
+// FILE: src/scss/layout/_hero.scss
+// PROJECT: GlowQueen - Header & hero
+// AUTHOR: @cgvrzon
+// ===========================================================================
+//
+// DESCRIPTION:
+//     The hero: headline block on the left, the model photograph bleeding off
+//     three edges, and the two overlays (stats, testimonials) that sit on top
+//     of her. 1920x1080, the whole canvas.
+//
+// WHY THE HERO STARTS AT y=0 AND THE HEADER FLOATS OVER IT:
+//     Every coordinate in Figma is measured from the top-left of the canvas,
+//     including the photograph's -59px. If the header took its 120px out of
+//     the flow, the hero would begin at y=120 and every one of those numbers
+//     would need 120 subtracted from it - an invisible offset applied by hand
+//     to a dozen values, and a permanent source of off-by-120 bugs. Taking
+//     the header out of the flow instead lets the CSS read exactly like the
+//     design file. The header is transparent over the backdrop anyway, which
+//     is what makes this honest rather than a trick.
+//
+// STACKING - and the trap in it:
+//     Figma paints backdrop -> photo -> headline -> testimonials -> header ->
+//     stats. In our HTML the photo is written AFTER the stats, so by document
+//     order it would land on top of them: exactly backwards. Source order is
+//     not a layering tool. z-index states the intent so nobody restores the
+//     bug by reordering the markup.
+// ===========================================================================
+
+@use "../abstracts/variables" as *;
+
+body {
+  // Anchor for the absolutely positioned header. Without it the header would
+  // resolve against the viewport, which happens to work here and would stop
+  // working the moment anything above it gained a position.
+  position: relative;
+}
+
+.site-header {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 10;
+}
+
+.hero {
+  position: relative;
+  height: $canvas-height;
+
+  // The photograph is deliberately larger than the canvas. This is what turns
+  // that overflow into the design's crop instead of a page-wide scrollbar.
+  overflow: hidden;
+}
+
+// ---------------------------------------------------------------------------
+// HEADLINE BLOCK
+// ---------------------------------------------------------------------------
+
+.hero__pitch {
+  position: absolute;
+  left: $gutter-inline;
+  top: 200px;
+  z-index: 2;
+}
+
+.hero__title {
+  width: 809px;
+  margin: 0;
+  // 64px type on an 80px line: two lines land at exactly 160px, which is what
+  // puts the sub-copy where Figma puts it without a hand-tuned margin.
+  font-size: $font-size-h1;
+  line-height: $line-height-h1;
+  color: $color-brand;
+}
+
+.hero__lead {
+  width: 760px;
+  // Figma places the lead 192px below the top of the headline block. The
+  // headline itself is 160px tall, so 32px of it is real separation.
+  margin: $space-8 0 0;
+  font-size: $font-size-lead;
+  line-height: $line-height-lead;
+  color: $color-text-body;
+}
+
+.hero__actions {
+  display: flex;
+  align-items: center;
+  // Book Now is 180 wide and Watch Video starts at 212: a 32px seam.
+  gap: $space-8;
+  // The block sits at y=528; lead ends at 472.
+  margin-top: $space-14;
+}
+
+// ---------------------------------------------------------------------------
+// PORTRAIT
+// ---------------------------------------------------------------------------
+
+.hero__portrait {
+  position: absolute;
+
+  // Straight from Figma, and they are meant to look odd: the image is wider
+  // and taller than the canvas and starts above its top edge. It bleeds off
+  // the top, the right and the bottom. Nothing here is a mistake to tidy.
+  left: 361px;
+  top: -59px;
+  width: 1639px;
+  height: 1229px;
+
+  z-index: 0;
+}

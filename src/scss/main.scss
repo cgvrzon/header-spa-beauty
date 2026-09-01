@@ -22,4 +22,15 @@
 @use "abstracts/variables" as *;
 
 @use "base/reset";
+@use "base/fonts";
 @use "base/typography";
+
+@use "layout/background-gradient";
+@use "layout/site-header";
+@use "layout/hero";
+
+@use "components/logo";
+@use "components/button";
+@use "components/icon";
+@use "components/stats";
+@use "components/testimonial";

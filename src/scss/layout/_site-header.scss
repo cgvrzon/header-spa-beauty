@@ -1,0 +1,82 @@
+// ===========================================================================
+// FILE: src/scss/layout/_site-header.scss
+// PROJECT: GlowQueen - Header & hero
+// AUTHOR: @cgvrzon
+// ===========================================================================
+//
+// DESCRIPTION:
+//     The banner row: brand on the left, navigation, account actions on the
+//     right. 1920x120, sitting on the cream half of the backdrop.
+//
+// HOW THE THREE GROUPS ARE PLACED, AND WHY NOT space-between:
+//     The obvious reach is `justify-content: space-between`, which spreads the
+//     children with EQUAL gaps. Measured against Figma the real gaps are 164px
+//     and 285px - not equal, so space-between would miss both. The designer
+//     did not distribute these; they placed them.
+//
+//     So: the logo falls at the left gutter on its own, the actions are pushed
+//     to the right gutter with `margin-inline-start: auto`, and the nav gets
+//     the one measured offset that has no rule behind it. That number is
+//     commented as measured precisely BECAUSE it is arbitrary - a reader who
+//     cannot tell a derived value from a measured one will eventually "tidy"
+//     it into a round number and break the fidelity.
+// ===========================================================================
+
+@use "../abstracts/variables" as *;
+
+.site-header {
+  display: flex;
+  align-items: center;
+  height: $header-height;
+
+  // The master column: everything on the page starts at this distance from
+  // the edge, and the actions end at its mirror on the right.
+  padding-inline: $gutter-inline;
+}
+
+// ---------------------------------------------------------------------------
+// NAVIGATION
+// ---------------------------------------------------------------------------
+
+.site-nav {
+  // MEASURED, not derived: Figma puts the menu at x=536 while the logo ends
+  // at x=371. There is no grid rule producing 165 - do not round it. The
+  // value was confirmed against the reference render, which caught the menu
+  // sitting one pixel left at 164.
+  margin-inline-start: 165px;
+}
+
+.site-nav__list {
+  display: flex;
+  align-items: center;
+  gap: $space-14; // 56px between items
+  list-style: none;
+}
+
+.site-nav__link {
+  font-size: $font-size-body;
+  color: $color-brand;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+.site-nav__more {
+  // A <button> arrives with a background, a border, its own font and a
+  // centred text. All of it has to be turned off before it can look like a
+  // menu item - the browser default is not a neutral starting point.
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+
+  // The designer left this item and "Sign In" in Nunito Sans while everything
+  // else is Poppins. Almost certainly an oversight, reproduced on purpose.
+  font-family: $font-family-alt;
+}

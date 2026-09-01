@@ -1,0 +1,61 @@
+// ===========================================================================
+// FILE: src/scss/components/_icon.scss
+// PROJECT: GlowQueen - Header & hero
+// AUTHOR: @cgvrzon
+// ===========================================================================
+//
+// DESCRIPTION:
+//     Sizing for every inline SVG, and the icon-only controls that hold them.
+//
+// WHY THIS FILE EXISTS AT ALL:
+//     An inline <svg> without width and height has NO intrinsic size: it
+//     resolves to 100% of its containing block. Measured on this very page
+//     before these rules existed, the SAME icon rendered 0x0 inside a <button>
+//     and 1920x1920 inside an <a> - the second one drew a shopping bag the
+//     size of the viewport. Icons always get an explicit size.
+//
+// currentColor:
+//     The strokes inherit the text colour of the control, so a hover only has
+//     to change `color` once and the icon follows. Hardcoding the hex in the
+//     SVG would need a second, separate rule to keep them in sync.
+// ===========================================================================
+
+@use "../abstracts/variables" as *;
+
+.icon {
+  width: $icon-md;
+  height: $icon-md;
+
+  // A flex item shrinks below its size by default; icons must not.
+  flex: none;
+}
+
+.icon--chevron {
+  width: $icon-sm;
+  height: $icon-sm;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: $color-brand;
+  cursor: pointer;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: $space-8;
+
+  // Pushes the whole group to the right gutter, mirroring the logo.
+  margin-inline-start: auto;
+}
