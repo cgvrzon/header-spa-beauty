@@ -130,6 +130,29 @@ traps worth naming:
   common accessibility regression in a polished design.
 - `prefers-reduced-motion` is honoured, because hover transitions count as motion.
 
+### Two contrast failures inherited from the design
+
+Audited against WCAG AA. Everything passes comfortably except two cases, and
+both come from the source design rather than from this implementation:
+
+| Element | Ratio | AA needs | |
+|---|---|---|---|
+| Stat captions, 18px `#909090` | 3.16 | 4.5 | fails |
+| Hero lead, 24px `#909090` | 3.01 | 3.0 | passes by 0.01 |
+
+The second one is worth naming even though it technically passes: a value
+sitting exactly on the threshold is not a margin. Any rounding, or a display
+with a different colour profile, drops it below.
+
+Both are **reproduced as designed and not corrected**, because the brief grades
+fidelity to the reference: raising the contrast would move the page away from
+the PDF. This is the note that a real handover would carry back to the
+designer — implement what you were given, and report what you found.
+
+The mint half of the wordmark measures 1.50, and a checker will flag it. It is
+not a failure: WCAG exempts text that forms part of a logo or brand name from
+any contrast requirement.
+
 ## Licence
 
 MIT. The design itself belongs to its original author and is reproduced here as
