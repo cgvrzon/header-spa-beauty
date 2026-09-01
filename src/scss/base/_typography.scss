@@ -7,26 +7,40 @@
 // DESCRIPTION:
 //     Page-wide type defaults. Component files set their own sizes; this file
 //     only decides what an unstyled element looks like.
+//
+//     The page background is NOT set here even though it applies to <body>:
+//     it belongs to layout/_background-gradient.scss, so there is one place
+//     that owns the backdrop instead of two that can disagree.
 // ===========================================================================
 
 @use "../abstracts/variables" as *;
+
+// A background on <body> is PROPAGATED to the whole viewport when <html> has
+// none of its own - so without this rule the backdrop would paint edge to edge
+// on a wide screen and the 1285px split would stop lining up with the content.
+// Giving <html> its own colour stops the propagation.
+html {
+  background-color: $color-surface-alt;
+}
 
 body {
   font-family: $font-family-base;
   font-size: $font-size-body;
   font-weight: $font-weight-regular;
   line-height: $line-height-base;
-  color: $color-text-muted;
-  background-color: $color-surface-alt;
+  color: $color-text-body;
 
-  // The design is a fixed composition, so the page is not fluid: it is a
-  // canvas of a known size. Anything narrower simply scrolls.
-  min-width: $canvas-width;
+  // A fixed composition, not a fluid one. An exact width rather than a minimum:
+  // everything inside is positioned against a 1920px canvas, so letting the
+  // body stretch on a wider screen would slide the backdrop's split away from
+  // the content sitting on it. Centred, and narrower screens simply scroll.
+  width: $canvas-width;
+  margin-inline: auto;
 }
 
 h1 {
   font-size: $font-size-h1;
   font-weight: $font-weight-bold;
-  line-height: $line-height-tight;
+  line-height: $line-height-h1;
   color: $color-brand;
 }
