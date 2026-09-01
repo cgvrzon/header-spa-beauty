@@ -5,13 +5,21 @@
 // ===========================================================================
 //
 // DESCRIPTION:
-//     Design tokens for the whole page. Every colour, space and size lives
+//     Design tokens for the whole page. Every colour, size and space lives
 //     here so a value is never typed twice in a component file.
 //
 // WHERE THE VALUES COME FROM:
-//     Colours were sampled pixel by pixel from the deliverable PDF, so they
-//     are the real values of the design and not an approximation by eye.
-//     Sizes marked TODO still need to be read off the Figma file.
+//     All of them were read off the Figma source (file LafekmLrarjADACe9Fcyx5,
+//     node 534:2), not measured from the exported PDF.
+//
+//     That distinction matters. Sampling a rendered PDF cannot tell a colour
+//     apart from a BLEND, and two earlier tokens turned out to be blends that
+//     do not exist in the design:
+//       - a "muted text" #6F8097 was the navy #264065 at 65% over the cream,
+//         picked up from antialiased glyph edges;
+//       - a "soft accent" #D3EAE5 was the translucent card over the mint.
+//     Both are gone. The lesson is kept because it will happen again: any
+//     token sampled from text or from a see-through surface is suspect.
 // ===========================================================================
 
 // ---------------------------------------------------------------------------
@@ -20,36 +28,58 @@
 // Named by role, not by hue: `$color-brand` survives a rebrand to purple,
 // `$color-navy` would start lying the day the brand changes.
 
-$color-brand: #264065; // headings, buttons, logo, icon strokes
-$color-accent: #a9d6cb; // mint panel behind the portrait
-$color-accent-soft: #d3eae5; // the testimonial card sitting on the mint
-$color-surface: #faf8f5; // cream background of the upper band
-$color-surface-alt: #ffffff; // white background of the lower band
-$color-text-muted: #6f8097; // nav links and body copy
+$color-brand: #264065; // headings, nav links, buttons, logo, icon strokes
+$color-accent: #a9d6cb; // mint panel, the "Queen" half of the logo
+$color-surface: #faf8f5; // cream band, left of the split
+$color-surface-alt: #ffffff; // the page below the band
+$color-text-body: #909090; // hero lead and the stat captions
+$color-text-strong: #070d15; // the testimonial quotes
+
+// Translucent fills. They are not flat colours: the design lets the backdrop
+// through and blurs it, so they only look right over something busy.
+$color-glass-card: rgba(255, 255, 255, 0.8); // stats card
+$color-glass-quote: rgba(255, 255, 255, 0.5); // testimonials
 
 // ---------------------------------------------------------------------------
 // TYPOGRAPHY
 // ---------------------------------------------------------------------------
-// The PDF embeds its fonts as outlines, so the family name is not readable
-// from it. Pending confirmation against the Figma file.
+// Poppins throughout, except "Sign In" and "More", which the designer left in
+// Nunito Sans. Almost certainly an oversight, kept on purpose for fidelity.
+//
+// Both are self-hosted (see base/_fonts.scss). Serving them from Google's CDN
+// would hand the visitor's IP to a third party with no legal basis - there is
+// a German court ruling on exactly that, and self-hosting is the fix.
 
-$font-family-base: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif; // TODO: confirm in Figma
+$font-family-base: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+$font-family-alt: "Nunito Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 
 $font-weight-regular: 400;
 $font-weight-medium: 500;
+$font-weight-semibold: 600;
 $font-weight-bold: 700;
 
-$font-size-body: 1.125rem; // 18px  - hero lead, nav
-$font-size-h1: 4rem; // 64px  - TODO: confirm in Figma
+$font-size-h1: 4rem; // 64px - hero headline
+$font-size-display: 2.25rem; // 36px - logo and the stat figures
+$font-size-lead: 1.5rem; // 24px - hero sub-copy
+$font-size-body: 1.125rem; // 18px - nav, buttons, quotes, captions
 
-$line-height-tight: 1.15; // headline
-$line-height-base: 1.6; // body copy
+// Line heights are unitless so they scale with the font size instead of being
+// inherited as a frozen pixel value. The px value Figma reports is in brackets.
+$line-height-h1: 1.25; // 80px over 64px
+$line-height-lead: 1.667; // 40px over 24px
+// 1.5 and not a rounder guess: Figma declares no line-height on any of the
+// 18px styles, which means the font's own default - and Poppins' default
+// measures exactly 1.5. Verified by binary search against the reference: 1.4
+// left the testimonial card 11px short, 1.5 lands on 247px exactly.
+// Written as a number rather than `normal` so the layout does not shift if
+// the face ever fails to load and a fallback with other metrics steps in.
+$line-height-base: 1.5;
 
 // ---------------------------------------------------------------------------
 // SPACING
 // ---------------------------------------------------------------------------
-// A 4px scale. Sticking to a scale is what stops a layout from drifting into
-// arbitrary values like 13px or 27px.
+// A 4px scale, named by multiples of 4. Sticking to a scale is what stops a
+// layout from drifting into arbitrary values like 13px or 27px.
 
 $space-2: 0.5rem; //  8px
 $space-3: 0.75rem; // 12px
@@ -57,14 +87,36 @@ $space-4: 1rem; // 16px
 $space-6: 1.5rem; // 24px
 $space-8: 2rem; // 32px
 $space-12: 3rem; // 48px
+$space-14: 3.5rem; // 56px - gap between nav items
 $space-16: 4rem; // 64px
+$space-18: 4.5rem; // 72px - gap between the three stats
 
 // ---------------------------------------------------------------------------
-// SHAPE
+// SHAPE AND EFFECTS
 // ---------------------------------------------------------------------------
 
-$radius-md: 1rem; // testimonial and stats cards
-$radius-pill: 999px; // buttons - a number large enough to always round fully
+$radius-md: 1rem; // 16px - stats card, testimonials, the Watch Video button
+$radius-pill: 999px; // any number past half the height rounds fully
+
+$blur-glass: 8px; // backdrop blur under both translucent surfaces
+$shadow-card: 0 24px 50px rgba(0, 0, 0, 0.05); // stat items
+// Same geometry, three times the opacity. Read off the SVG's own filter:
+// feOffset dy=24 + feGaussianBlur stdDeviation=25 (a blur radius of 50).
+// Figma's own filter gives 0.15. Raised on request to read more clearly at
+// 1:1; the geometry is untouched so the shape of the shadow still matches.
+$shadow-disc: 0 24px 50px rgba(0, 0, 0, 0.22); // the play disc
+
+// ---------------------------------------------------------------------------
+// ICONS
+// ---------------------------------------------------------------------------
+// An inline SVG has NO intrinsic size: it takes 100% of whatever contains it.
+// Leave these out and the same icon renders 0x0 inside a button and 1920x1920
+// inside a link. Every icon gets an explicit size, always.
+
+$icon-sm: 24px; // chevron
+$icon-md: 32px; // search, shopping bag, quote mark
+$icon-lg: 48px; // play, inside the Watch Video button
+$icon-stat: 72px; // the three circular stat icons
 
 // ---------------------------------------------------------------------------
 // LAYOUT
@@ -74,7 +126,15 @@ $radius-pill: 999px; // buttons - a number large enough to always round fully
 
 $canvas-width: 1920px;
 $canvas-height: 1080px;
-$gutter-inline: 160px; // distance from the left edge to the logo and the H1
+$gutter-inline: 160px; // left edge to the logo and the H1 - the master column
+$header-height: 120px;
+
+// The backdrop is a single band across the top of the canvas, split into two
+// colours. Both numbers come from Figma, not from measuring the render: the
+// PDF was consistently 1-4px off because glyph and edge antialiasing widens
+// whatever you sample.
+$band-height: 820px; // y where the cream/mint band gives way to white
+$band-split: 1285px; // x where the cream ends and the mint panel begins
 
 // ---------------------------------------------------------------------------
 // MOTION
