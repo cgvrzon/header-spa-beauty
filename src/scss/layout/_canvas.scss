@@ -31,6 +31,27 @@
 //     problem to begin with. The cap means: shrink to fit when it does not
 //     fit, and never grow past life size.
 //
+// WHY THE WIDTH ALONE, AND NOT THE SMALLER OF WIDTH AND HEIGHT:
+//     Fitting BOTH axes is the safe answer, and it leaves a gap: a window
+//     whose aspect ratio is wider than 16:9 runs out of height first, so the
+//     scaled canvas stops short of the side edges. Measured on a 1680x920
+//     window: 22px of bare page down each side, which reads as a bug.
+//
+//     Scaling by width alone fills those edges. The cost is that whatever
+//     exceeds the height spills past the bottom - 25px on that same window,
+//     and what falls off there is white band and the last sliver of a photo
+//     that the design already crops.
+//
+// WHY overflow-y IS HIDDEN, AND IT IS NOT COSMETIC:
+//     Allowing the spill to scroll instead of clipping looks harmless and is
+//     not: the vertical scrollbar takes 15px of width, the canvas no longer
+//     fits, and a HORIZONTAL scrollbar appears too. Measured: the side gap
+//     comes back AND both bars show up. Clipping breaks that loop.
+//
+//     The trade-off, stated plainly: on a very short window this clips more
+//     than 25px and there is no way to scroll to it. That is acceptable for a
+//     fixed desktop composition and would not be for a content page.
+//
 // GRACEFUL DEGRADATION:
 //     A browser that does not support `zoom` ignores the declaration and
 //     shows the page at 1:1 - the behaviour before this file existed. Nothing
@@ -44,10 +65,10 @@
 //     that carries the width, the margins and the backdrop, so it IS the
 //     canvas; <html> is the window it is seen through. Scaling the artwork
 //     rather than the window is the honest reading of what is happening.
+html {
+  overflow-y: hidden;
+}
+
 body {
-  zoom: min(
-    1,
-    calc(100vw / #{$canvas-width}),
-    calc(100vh / #{$canvas-height})
-  );
+  zoom: min(1, calc(100vw / #{$canvas-width}));
 }
