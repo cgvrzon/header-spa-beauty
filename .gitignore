@@ -1,0 +1,13 @@
+# Material de partida del enunciado (Figma 33 MB + PDF) — no es codigo del proyecto
+_material/
+
+# Dependencias
+node_modules/
+
+# Artefactos de Sass
+.sass-cache/
+*.css.map
+
+# Sistema
+.DS_Store
+Thumbs.db

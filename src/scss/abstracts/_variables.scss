@@ -1,0 +1,83 @@
+// ===========================================================================
+// FILE: src/scss/abstracts/_variables.scss
+// PROJECT: GlowQueen - Header & hero
+// AUTHOR: @cgvrzon
+// ===========================================================================
+//
+// DESCRIPTION:
+//     Design tokens for the whole page. Every colour, space and size lives
+//     here so a value is never typed twice in a component file.
+//
+// WHERE THE VALUES COME FROM:
+//     Colours were sampled pixel by pixel from the deliverable PDF, so they
+//     are the real values of the design and not an approximation by eye.
+//     Sizes marked TODO still need to be read off the Figma file.
+// ===========================================================================
+
+// ---------------------------------------------------------------------------
+// COLOUR
+// ---------------------------------------------------------------------------
+// Named by role, not by hue: `$color-brand` survives a rebrand to purple,
+// `$color-navy` would start lying the day the brand changes.
+
+$color-brand: #264065; // headings, buttons, logo, icon strokes
+$color-accent: #a9d6cb; // mint panel behind the portrait
+$color-accent-soft: #d3eae5; // the testimonial card sitting on the mint
+$color-surface: #faf8f5; // cream background of the upper band
+$color-surface-alt: #ffffff; // white background of the lower band
+$color-text-muted: #6f8097; // nav links and body copy
+
+// ---------------------------------------------------------------------------
+// TYPOGRAPHY
+// ---------------------------------------------------------------------------
+// The PDF embeds its fonts as outlines, so the family name is not readable
+// from it. Pending confirmation against the Figma file.
+
+$font-family-base: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif; // TODO: confirm in Figma
+
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+$font-size-body: 1.125rem; // 18px  - hero lead, nav
+$font-size-h1: 4rem; // 64px  - TODO: confirm in Figma
+
+$line-height-tight: 1.15; // headline
+$line-height-base: 1.6; // body copy
+
+// ---------------------------------------------------------------------------
+// SPACING
+// ---------------------------------------------------------------------------
+// A 4px scale. Sticking to a scale is what stops a layout from drifting into
+// arbitrary values like 13px or 27px.
+
+$space-2: 0.5rem; //  8px
+$space-3: 0.75rem; // 12px
+$space-4: 1rem; // 16px
+$space-6: 1.5rem; // 24px
+$space-8: 2rem; // 32px
+$space-12: 3rem; // 48px
+$space-16: 4rem; // 64px
+
+// ---------------------------------------------------------------------------
+// SHAPE
+// ---------------------------------------------------------------------------
+
+$radius-md: 1rem; // testimonial and stats cards
+$radius-pill: 999px; // buttons - a number large enough to always round fully
+
+// ---------------------------------------------------------------------------
+// LAYOUT
+// ---------------------------------------------------------------------------
+// The design is a fixed 1920x1080 composition; the deliverable is explicitly
+// not responsive.
+
+$canvas-width: 1920px;
+$canvas-height: 1080px;
+$gutter-inline: 160px; // distance from the left edge to the logo and the H1
+
+// ---------------------------------------------------------------------------
+// MOTION
+// ---------------------------------------------------------------------------
+
+$transition-fast: 160ms ease;

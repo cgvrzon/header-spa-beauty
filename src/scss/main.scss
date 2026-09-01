@@ -1,0 +1,25 @@
+// ===========================================================================
+// FILE: src/scss/main.scss
+// PROJECT: GlowQueen - Header & hero
+// AUTHOR: @cgvrzon
+// ===========================================================================
+//
+// DESCRIPTION:
+//     The only entry point Sass compiles. Everything else is a partial
+//     (leading underscore) that never produces a file of its own.
+//
+// WHY @use AND NOT @import:
+//     @import is deprecated in Dart Sass and behaves badly: it re-evaluates
+//     a file every time it is imported, so shared code ends up duplicated in
+//     the output. @use loads a file once and namespaces what it exports.
+//
+// LOAD ORDER MATTERS:
+//     abstracts first (they only define tokens, they emit no CSS), then base,
+//     then layout, then components. Later rules can override earlier ones at
+//     equal specificity, so the cascade follows the order below.
+// ===========================================================================
+
+@use "abstracts/variables" as *;
+
+@use "base/reset";
+@use "base/typography";

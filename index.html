@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<!--
+  ===========================================================================
+  FILE: index.html
+  PROJECT: GlowQueen - Header & hero for a spa and beauty business
+  AUTHOR: @cgvrzon
+  ===========================================================================
+
+  DESCRIPTION:
+      Single static page reproducing the ConquerBlocks CSS deliverable 1.
+      It renders one site header and one hero section; there is no other
+      content, so the page is deliberately small and every element earns
+      its place.
+
+  DOCUMENT OUTLINE:
+      header.site-header    banner landmark - brand, main nav, account actions
+      main > section.hero   the hero itself
+        .hero__pitch          headline, sub-copy and the two calls to action
+        .hero__stats          three business figures (15+, 25+, 100%)
+        .hero__portrait       the model photograph (decorative)
+        .hero__testimonials   two customer quotes
+
+  ACCESSIBILITY NOTES:
+      - lang="en": the whole copy is English, screen readers need to know.
+      - Icon-only controls carry a visually hidden label; the SVG itself is
+        aria-hidden because the label already names the control.
+      - The portrait uses alt="" on purpose: it reinforces the message but
+        carries no information the text does not already give.
+  ===========================================================================
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GlowQueen — Bring back the beauty and glow of your skin</title>
+    <meta
+      name="description"
+      content="GlowQueen offers treatments from head to toe using the best products, advanced technology and affordable prices."
+    />
+    <link rel="stylesheet" href="dist/css/main.css" />
+  </head>
+
+  <body>
+    <!-- =====================================================================
+         SITE HEADER
+         Three groups on one row: brand, navigation, account actions.
+         ================================================================== -->
+    <header class="site-header">
+      <a class="logo" href="#">
+        <span class="logo__strong">Glow</span><span class="logo__accent">Queen</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Main">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="#">Home</a></li>
+          <li><a class="site-nav__link" href="#">About</a></li>
+          <li><a class="site-nav__link" href="#">Services</a></li>
+          <li><a class="site-nav__link" href="#">Facilities</a></li>
+          <li>
+            <!-- A disclosure control, not a link: it reveals a submenu.
+                 aria-expanded is what tells assistive tech its state. -->
+            <button class="site-nav__link site-nav__more" type="button" aria-expanded="false">
+              More
+              <svg class="icon icon--chevron" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="site-header__actions">
+        <button class="icon-button" type="button">
+          <span class="visually-hidden">Search</span>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2" />
+            <path d="M16.5 16.5L21 21" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" />
+          </svg>
+        </button>
+
+        <a class="icon-button" href="#">
+          <span class="visually-hidden">Shopping bag</span>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 8h12l-1 12H7L6 8z" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linejoin="round" />
+            <path d="M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" />
+          </svg>
+        </a>
+
+        <a class="link-underlined" href="#">Sign In</a>
+        <a class="button button--primary" href="#">Sign Up</a>
+      </div>
+    </header>
+
+    <main>
+      <!-- ===================================================================
+           HERO
+           =============================================================== -->
+      <section class="hero">
+        <div class="hero__pitch">
+          <h1 class="hero__title">Bring back the beauty<br />and glow of your skin</h1>
+
+          <p class="hero__lead">
+            We provide you various treatments from head to toe using the best product, advanced
+            technology, and affordable price
+          </p>
+
+          <div class="hero__actions">
+            <a class="button button--primary button--lg" href="#">Book Now</a>
+
+            <!-- Opens a video overlay, so it is a button and not a link. -->
+            <button class="video-button" type="button">
+              <span class="video-button__disc" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24">
+                  <path d="M9 7.5v9l7-4.5-7-4.5z" fill="currentColor" />
+                </svg>
+              </span>
+              Watch Video
+            </button>
+          </div>
+        </div>
+
+        <!-- Three figures about the business. A list, because they are
+             siblings of equal weight and a screen reader should announce
+             how many there are. -->
+        <ul class="hero__stats stats">
+          <li class="stats__item">
+            <span class="stats__icon" aria-hidden="true"><!-- facial treatment icon --></span>
+            <span class="stats__value">15+</span>
+            <span class="stats__label">Special Treatment</span>
+          </li>
+          <li class="stats__item">
+            <span class="stats__icon" aria-hidden="true"><!-- lotus icon --></span>
+            <span class="stats__value">25+</span>
+            <span class="stats__label">Professional Therapist</span>
+          </li>
+          <li class="stats__item">
+            <span class="stats__icon" aria-hidden="true"><!-- herbal mortar icon --></span>
+            <span class="stats__value">100%</span>
+            <span class="stats__label">Herbal Cream Formula</span>
+          </li>
+        </ul>
+
+        <img class="hero__portrait" src="assets/img/model.png" alt="" width="1417" height="1417" />
+
+        <!-- figure + figcaption, not blockquote + cite: <cite> names a WORK
+             (a book, a film), never the person speaking. The attribution of
+             a quote belongs in figcaption. -->
+        <figure class="testimonial testimonial--top">
+          <blockquote class="testimonial__quote">
+            <p>
+              I have a regular schedule to take treatment from GlowQueen, they gave me the best
+              service and treatment ever to maintain the beauty and health of my skin
+            </p>
+          </blockquote>
+          <figcaption class="testimonial__author">Sophia Princeton</figcaption>
+        </figure>
+
+        <figure class="testimonial testimonial--bottom">
+          <blockquote class="testimonial__quote">
+            <p>
+              For the past few years, I've had a hard time finding the right place for skin care to
+              deal with my complicated skin condition, thank God I found GlowQueen to treat my skin
+            </p>
+          </blockquote>
+          <figcaption class="testimonial__author">Tamara Jules</figcaption>
+        </figure>
+      </section>
+    </main>
+  </body>
+</html>

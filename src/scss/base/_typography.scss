@@ -1,0 +1,32 @@
+// ===========================================================================
+// FILE: src/scss/base/_typography.scss
+// PROJECT: GlowQueen - Header & hero
+// AUTHOR: @cgvrzon
+// ===========================================================================
+//
+// DESCRIPTION:
+//     Page-wide type defaults. Component files set their own sizes; this file
+//     only decides what an unstyled element looks like.
+// ===========================================================================
+
+@use "../abstracts/variables" as *;
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-body;
+  font-weight: $font-weight-regular;
+  line-height: $line-height-base;
+  color: $color-text-muted;
+  background-color: $color-surface-alt;
+
+  // The design is a fixed composition, so the page is not fluid: it is a
+  // canvas of a known size. Anything narrower simply scrolls.
+  min-width: $canvas-width;
+}
+
+h1 {
+  font-size: $font-size-h1;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  color: $color-brand;
+}

@@ -1,0 +1,15 @@
+{
+  "name": "header-spa-beauty",
+  "version": "1.0.0",
+  "description": "Header-hero for a spa & beauty business. ConquerBlocks CSS deliverable 1.",
+  "author": "cgvrzon",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "sass --watch src/scss/main.scss dist/css/main.css --style=expanded",
+    "build": "sass src/scss/main.scss dist/css/main.css --style=compressed --no-source-map"
+  },
+  "devDependencies": {
+    "sass": "^1.103.1"
+  }
+}

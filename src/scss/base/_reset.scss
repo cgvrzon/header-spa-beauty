@@ -1,0 +1,101 @@
+// ===========================================================================
+// FILE: src/scss/base/_reset.scss
+// PROJECT: GlowQueen - Header & hero
+// AUTHOR: @cgvrzon
+// ===========================================================================
+//
+// DESCRIPTION:
+//     A small, deliberate reset. Not Normalize, not a 400 line boilerplate:
+//     only the rules this page actually needs, each one with its reason.
+// ===========================================================================
+
+// border-box everywhere: padding and border stop inflating declared widths,
+// which is the single change that removes most layout arithmetic.
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+// The browser default margins on headings and paragraphs fight against a
+// spacing scale. Spacing is decided by the layout, not inherited.
+body,
+h1,
+p,
+figure,
+blockquote {
+  margin: 0;
+}
+
+// Lists used for grouping (nav items, stats) should not render as bullets.
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// Images behave as blocks and never overflow their container.
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+// Form controls do not inherit typography by default. Making them inherit
+// means a button styled as a link really looks like the surrounding text.
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+// ---------------------------------------------------------------------------
+// ACCESSIBILITY HELPERS
+// ---------------------------------------------------------------------------
+
+// Visible to screen readers, invisible on screen. Used to name icon-only
+// controls. `display: none` would hide it from assistive tech too, which is
+// exactly what we do not want.
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Every interactive element keeps a visible focus ring. Removing outlines
+// without replacing them is the most common accessibility regression in a
+// polished design.
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+// The design has no motion by itself, but hover transitions still count as
+// motion for users who ask the system to reduce it.
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
