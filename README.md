@@ -3,6 +3,8 @@
 Static header-hero for a spa and beauty business. First CSS deliverable of the
 ConquerBlocks Full Stack master's programme.
 
+> **Live:** https://cgvrzon.github.io/header-spa-beauty/
+>
 > **Status:** complete. Measured fidelity against the reference: **99.08%**.
 
 ## The brief
